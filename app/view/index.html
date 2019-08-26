@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="/public/layui/css/layui.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="layui-upload">
+      <button type="button" class="layui-btn" id="test2">多图片上传</button>
+      <blockquote
+        class="layui-elem-quote layui-quote-nm"
+        style="margin-top: 10px;"
+      >
+        预览图：
+        <div class="layui-upload-list" id="demo2"></div>
+      </blockquote>
+    </div>
+  </body>
+  <script src="/public/layui/layui.js"></script>
+  <script>
+    var imgList = [];
+    layui.use('upload', function() {
+      var $ = layui.jquery,
+        upload = layui.upload;
+      //多图片上传
+      var uploadInst = upload.render({
+        elem: '#test2',
+        url: '/upload',
+        multiple: true,
+        before: function(obj) {
+          //预读本地文件示例，不支持ie8
+          obj.preview(function(index, file, result) {
+            $('#demo2').append(
+              '<img src="' +
+                result +
+                '" alt="' +
+                file.name +
+                '" class="layui-upload-img">'
+            );
+          });
+        },
+        allDone: function(data) {
+         
+          console.log(data);
+          console.log(imgList);
+        },
+        choose: function(obj) {
+          var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+        },
+       
+        done: function(res, index, upload) {
+          // document.querySelector('.layui-upload-file').value = '';
+          console.log(res);
+          imgList = [...imgList, ...res.data.data];
+          // delete this.files[index];
+         
+          
+          //上传完毕
+        }
+      });
+    });
+  </script>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet/less" href="/public/css/demo.less" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <p class="demo">
+      <span class="schil">4444</span>
+    </p>
+    <!-- 预览图片容器 -->
+    <div id="previewArea">
+    </div>
+    <form  id="formId">
+      <input type="text" name="num" id="num" />
+      <input type="file" name="file" id="file" multiple/>
+      <input type="button" id="send">提交</input>
+    </form>
+  </body>
+  <script>
+    var formId = document.getElementById("formId");
+    function ajaxUploadFile(url,formdata) {
+        var xmlhttp;
+        if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        }else {// code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.open("POST",url,true);
+        xmlhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        xmlhttp.send(formdata);
+        xmlhttp.onreadystatechange=function() {
+            if (xmlhttp.readyState==4) {
+                if (xmlhttp.status==200) {
+                  console.log(JSON.parse(xmlhttp.response))
+                    // console.log("上传成功"+xmlhttp.responseText);
+                }else {
+                    console.log("上传失败"+xmlhttp.responseText);
+                }
+            }
+        }
+    }
+
+    function handleImageFile(file) {//多图片预览
+      var previewArea = document.getElementById('previewArea');
+     
+      // var fileInput = document.getElementById("file");
+      // var file = fileInput.files[0];
+      for (let i = 0; i < file.length; i++) {
+        var img = document.createElement('img');
+        img.file = file[i];
+        previewArea.appendChild(img);
+
+        var reader = new FileReader();
+        reader.onload = (function(aImg) {
+        return function(e) {
+        aImg.src = e.target.result;
+        }
+        })(img);
+        reader.readAsDataURL(file[i]);  
+          
+        }
+     
+      }
+    document.querySelector('#file').addEventListener('change',function(e){
+      console.log(e.target.files)
+      handleImageFile(e.target.files)
+    })
+    document.querySelector('#send').addEventListener('click',function(){
+      var formdata = new FormData(formId);//支持ie10+
+      // console.log(formdata)
+      // formdata.append("name",document.getElementById("num").value);
+      // formdata.append("file",document.getElementById("file").files[0]);
+      var url = '/upload';
+      ajaxUploadFile(url,formdata);
+    })
+  </script>
+  <script src="/public/js/less.js"></script>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet/less" href="/public/css/demo.less" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <p class="demo">
+      <span class="schil">4444</span>
+    </p>
+    <form
+      id="formId"
+      action="/upload"
+      method="POST"
+      enctype="multipart/form-data"
+      target="nm_iframe"
+    >
+      <input type="text" name="num" id="num" />
+      <input type="file" name="file" id="file" />
+      <input type="submit" value="submit" />
+    </form>
+
+    <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>
+    <button class="canva">截图</button>
+  </body>
+  <script src="/public/js/jquery-1.12.4.js"></script>
+
+  <script>
+    // var formId = document.getElementById("formId");
+
+    function func(event) {
+      event.preventDefault();
+    }
+    function canva() {
+      html2canvas(document.body, {
+        onrendered: function(canvas) {
+          var url = canvas.toDataURL(); //图片地址
+          document.body.appendChild(canvas);
+        },
+        width: 300,
+        height: 300
+      });
+    }
+    document.querySelector('.canva').addEventListener('click',function(){
+      canva()
+    })
+    // function ajaxUploadFile(url,formdata) {
+    //     var xmlhttp;
+    //     if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+    //         xmlhttp = new XMLHttpRequest();
+    //     }else {// code for IE6, IE5
+    //         xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    //     }
+    //     xmlhttp.open("POST",url,true);
+    //     xmlhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    //     xmlhttp.send(formdata);
+    //     xmlhttp.onreadystatechange=function() {
+    //         if (xmlhttp.readyState==4) {
+    //             if (xmlhttp.status==200) {
+    //                 console.log("上传成功"+xmlhttp.responseText);
+    //             }else {
+    //                 console.log("上传失败"+xmlhttp.responseText);
+    //             }
+    //         }
+    //     }
+    // }
+    // document.querySelector('#send').addEventListener('click',function(){
+    //   var formdata = new FormData(formId);//支持ie10+
+    //   console.log(formdata)
+    //   // formdata.append("name",document.getElementById("num").value);
+    //   // formdata.append("file",document.getElementById("file").files[0]);
+    //   var url = '/upload';
+    //   ajaxUploadFile(url,formdata);
+    // })
+  </script>
+  <script src="/public/js/less.js"></script>
+</html>

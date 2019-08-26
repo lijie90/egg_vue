@@ -1,0 +1,54 @@
+{
+  "name": "egg-server-test",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "dependencies": {
+    "NodejsAgent": "^1.0.2",
+    "easywebpack": "^4.11.6",
+    "egg": "^2.2.1",
+    "egg-cors": "^2.2.0",
+    "egg-redis": "^2.3.2",
+    "egg-scripts": "^2.5.0",
+    "egg-session-redis": "^2.1.0",
+    "egg-view-nunjucks": "^2.2.0",
+    "egg-webpack": "^4.4.9",
+    "form-data": "^2.3.3",
+    "http-proxy-middleware": "^0.19.1",
+    "koa2-connect": "^1.0.2"
+  },
+  "devDependencies": {
+    "autod": "^3.0.1",
+    "autod-egg": "^1.0.0",
+    "egg-bin": "^4.13.1",
+    "egg-ci": "^1.8.0",
+    "egg-mock": "^3.14.0",
+    "eslint": "^4.11.0",
+    "eslint-config-egg": "^6.0.0",
+    "webstorm-disable-index": "^1.2.0"
+  },
+  "engines": {
+    "node": ">=8.9.0"
+  },
+  "scripts": {
+    "start": "egg-scripts start --port=7015 --daemon --title=egg-server-test",
+    "stop": "egg-scripts stop --title=egg-server-test",
+    "dev": "egg-bin dev --port=7015",
+    "debug": "egg-bin debug",
+    "test": "npm run lint -- --fix && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "egg-bin cov",
+    "lint": "eslint .",
+    "ci": "npm run lint && npm run cov",
+    "autod": "autod"
+  },
+  "ci": {
+    "version": "8"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "",
+  "license": "MIT"
+}
